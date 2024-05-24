@@ -1,0 +1,70 @@
+<div class="modal-background" *ngIf="isOpen" (click)="close()">
+  <div class="modal-container"
+    [ngClass]="{'small': size === 'small', 'medium': size === 'medium', 'large': size === 'large'}">
+    <div class="modal-header">
+      <h5 class="modal-title">Creacion de Cliente</h5>
+      <button type="button" class="btn-close" (click)="close()"> <i class="fas fa-times"></i></button>
+    </div>
+    <!-- Contenido del modal -->
+    <div (click)="$event.stopPropagation()">
+
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="clienteForm" (ngSubmit)="onSubmit($event)">
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3">
+                <label for="razonSocial" class="col-form-label">Razón Social</label>
+                <input type="text" class="form-control" id="razonSocial" formControlName="razonSocial">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="nroDocumento" class="col-form-label">Nro Documento</label>
+                <input type="text" class="form-control" id="nroDocumento" formControlName="nroDocumento">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3">
+                <label for="direccion" class="col-form-label">Dirección</label>
+                <input type="text" class="form-control" id="direccion" formControlName="direccion">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="telefono" class="col-form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telefono" formControlName="telefono">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3">
+                <label for="cel" class="col-form-label">Celular</label>
+                <input type="text" class="form-control" id="cel" formControlName="cel">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="email" class="col-form-label">Email</label>
+                <input type="email" class="form-control" id="email" formControlName="email">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3">
+                <label for="listaPrecioId" class="col-form-label">Lista de Precio</label>
+                <select class="form-control" id="listaPrecioId" formControlName="listaPrecioId">
+                  <option *ngFor="let lista of listas()" [value]="lista.id">{{ lista.descripcion }}</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="formaVentaId" class="col-form-label">Forma Venta</label>
+                <select class="form-control" id="formaVentaId" formControlName="formaVentaId">
+                  <option *ngFor="let forma of formas()" [value]="forma.id">{{ forma.descripcion }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>

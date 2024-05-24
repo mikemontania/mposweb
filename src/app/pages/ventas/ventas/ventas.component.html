@@ -1,0 +1,351 @@
+<section class="section profile">
+  <div class="row">
+    <div class="col-xl-8">
+      @if(sucursal().id && listaPrecio().id && showShop ) {
+
+      <app-product-list
+        (cantidadChange)="changeCantidad($event)"
+        (productClicked)="seleccionarProducto($event)"
+        [sucursalId]="sucursal().id"
+        [cantidad]="cantidad"
+        [listaPrecioId]="listaPrecio().id"
+      ></app-product-list>
+
+      } @else {
+      <span class="client-info">cargando ...</span>
+      }
+    </div>
+    <div class="col-xl-4">
+      <!--   selectores -->
+      <div class="card">
+        <div class="card-body pt-4 d-flex flex-column align-items-center">
+          <div class="input-group mb-3 w-100 d-flex selector">
+            <span
+              (click)="buscarCliente()"
+              class="input-group-text flex-grow-1 d-flex justify-content-between btn-outline-success text-success"
+              id="basic-addon3"
+            >
+              @if(cliente().nroDocumento != '') {
+              <span class="client-info"
+                >{{ cliente().nroDocumento }} -
+                {{ cliente().razonSocial }}</span
+              >
+              } @else {
+              <span class="bg-danger text-white"
+                ><small>Atención seleccione Cliente</small></span
+              >
+              }
+              <span class="dropdown-icon">
+                <i class="mh-1 fa-solid fa-sort-down"></i>
+              </span>
+            </span>
+            <span
+              (click)="createClienteModal()"
+              class="input-group-text btn-outline-success text-success"
+              id="basic-addon3"
+            >
+              <i class="fa-solid fa-user-plus"></i>
+            </span>
+          </div>
+
+          <!-- Agrupación de Sucursal y Serie -->
+          <!--  <div class="d-flex w-100">
+            <div class="input-group mb-3 w-50 d-flex selector">
+              <span
+                (click)="buscarSucursal()"
+                class="input-group-text flex-grow-1 d-flex justify-content-between"
+                id="basic-addon3"
+              >
+                @if(sucursal().id) {
+                <span class="client-info">
+                  <small>{{ sucursal().descripcion }}</small></span
+                >
+                } @else {
+                <span class="bg-danger text-white"
+                  ><small>Atención seleccione Sucursal</small></span
+                >
+                }
+                <span class="dropdown-icon">
+                  <i class="mh-1 fa-solid fa-sort-down"></i>
+                </span>
+              </span>
+            </div>
+
+            <div class="input-group mb-3 w-50 d-flex selector">
+              <span
+                (click)="buscarNumeracion()"
+                class="input-group-text flex-grow-1 d-flex justify-content-between"
+                id="basic-addon3"
+              >
+                @if(numeracion().id) {
+                <span class="client-info"
+                  >Serie: <small>{{ numeracion().serie }}</small>
+                </span>
+                } @else {
+                <span class="bg-danger text-white"
+                  ><small>Atención seleccione Numeración</small></span
+                >
+                }
+                <span class="dropdown-icon">
+                  <i class="mh-1 fa-solid fa-sort-down"></i>
+                </span>
+              </span>
+            </div>
+          </div> -->
+
+          <!-- Agrupación de Forma de Venta y Lista de Precio -->
+          <!--   <div class="d-flex w-100">
+            <div class="input-group mb-3 p w-50 d-flex selector">
+              <span
+                (click)="buscarFormaVenta()"
+                class="input-group-text flex-grow-1 d-flex justify-content-between"
+                id="basic-addon3"
+              >
+                @if(formaVenta().id) {
+                <span class="client-info"
+                  >Forma venta:
+                  <small>{{ formaVenta().descripcion }}</small></span
+                >
+                } @else {
+                <span class="bg-danger text-white"
+                  ><small>Atención seleccione Forma Venta</small></span
+                >
+                }
+                <span class="dropdown-icon">
+                  <i class="mh-1 fa-solid fa-sort-down"></i>
+                </span>
+              </span>
+            </div>
+
+            <div class="input-group mb-3 w-50 d-flex selector">
+              <span
+                (click)="buscarListaPrecio()"
+                class="input-group-text flex-grow-1 d-flex justify-content-between"
+                id="basic-addon3"
+              >
+                @if(listaPrecio().id) {
+                <span class="client-info"
+                  >Lista Precio: <small>{{ listaPrecio().descripcion }}</small>
+                </span>
+                } @else {
+                <span class="client-info"><small>cargando ...</small></span>
+                }
+                <span class="dropdown-icon">
+                  <i class="mh-1 fa-solid fa-sort-down"></i>
+                </span>
+              </span>
+            </div>
+          </div> -->
+          <div class="container ">
+            <div class="row">
+              <div class="col-md-6">
+                <p>
+                  <strong>Sucursal:</strong>
+                  <span *ngIf="sucursal().id">{{ sucursal().descripcion }}</span>
+                  <span *ngIf="!sucursal().id" class="bg-danger text-white">Atención seleccione Sucursal</span>
+                </p>
+
+                <p>
+                  <strong>Timbrado:</strong>
+                  <span *ngIf="numeracion().id">{{ numeracion().timbrado }}</span>
+                  <span *ngIf="!numeracion().id" class="bg-danger text-white">Atención seleccione Numeración</span>
+                </p>
+              </div>
+              <div class="col-md-6">
+                <p>
+                  <strong>Lista Precio:</strong>
+                  <span *ngIf="listaPrecio().id">{{ listaPrecio().descripcion }}</span>
+                  <span *ngIf="!listaPrecio().id" class="bg-danger text-white">Cargando...</span>
+                </p>
+                <p>
+                  <strong>Serie:</strong>
+                  <span *ngIf="numeracion().id">{{ numeracion().serie }}</span>
+                  <span *ngIf="!numeracion().id" class="bg-danger text-white">Atención seleccione Numeración</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!--   detalles -->
+      <div class="card">
+        <div class="card-body pt-4 d-flex flex-column align-items-center">
+          <div id="details">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Cant.</th>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Del</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (detalle of detalles; track detalle.varianteId; let index =
+                $index) {
+                <tr>
+                  <th scope="row">
+                    <div
+                      class="btn-group"
+                      role="group"
+                      aria-label="Basic outlined example"
+                    >
+                      <button
+                        type="button"
+                        class="btn btn-outline-primary"
+                        (click)="ajusteCantidad(index, -1)"
+                      >
+                        -
+                      </button>
+                      <span class="btn btn-outline-secondary">{{
+                        detalle.cantidad | number
+                      }}</span>
+                      <button
+                        type="button"
+                        class="btn btn-outline-primary"
+                        (click)="ajusteCantidad(index, 1)"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </th>
+                  <td>{{ detalle.codErp }}</td>
+                  <td>{{ detalle.importePrecio | number }} Gs</td>
+                  <td>{{ detalle.importeTotal | number }} Gs</td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-danger text-danger"
+                      (click)="quitarProducto(index)"
+                    >
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </td>
+                </tr>
+                } @empty {
+                <tr></tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!--   totales -->
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <p class="ps-3">
+                <span class="text-danger small pt-1 fw-bold">Subtotal:</span>
+                <strong class="text-right">
+                  {{ factura().importeSubtotal | number }} Gs
+                </strong>
+              </p>
+
+              <p class="ps-3">
+                <span class="text-danger small pt-1 fw-bold">Descuento:</span>
+                <strong class="text-right">
+                  {{ factura().importeDescuento | number }} Gs
+                </strong>
+              </p>
+            </div>
+
+            <div class="col-md-6">
+              <p class="ps-3">
+                <span class="text-danger small pt-1 fw-bold">Total:</span>
+                <strong class="text-right  ">
+                  {{ factura().importeTotal | number }} Gs
+                </strong>
+              </p>
+
+              <p class="ps-3">
+                <span class="text-danger small pt-1 fw-bold">Articulos:</span>
+                <strong class="text-right  ">
+                  {{ detalles?.length | number }}
+                </strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--   botones -->
+      <div class="card">
+        <div class="card-body btn-group">
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            (click)="registrar()"
+          >
+            Registrar
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="cancelar()"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- selector de cliente-->
+
+@if(createCobranza ) {
+<app-cobranza-create
+  [isOpen]="createCobranza"
+  [sucursalId]="sucursal().id"
+  [tipo]="'VENTA'"
+  [userId]="userId()"
+  [importeTotal]="factura().importeTotal"
+  (cobranza)="guardarCobranza($event)"
+  (closeModal)="createCobranza = false"
+></app-cobranza-create>
+
+} @if(createCliente ) {
+<app-cliente-create
+  [isOpen]="createCliente"
+  (cliente)="selectCliente($event)"
+  (closeModal)="createCliente = false"
+></app-cliente-create>
+
+} @if(searchCliente ) {
+<app-cliente-search
+  [isOpen]="searchCliente"
+  (cliente)="selectCliente($event)"
+  (closeModal)="searchCliente = false"
+></app-cliente-search>
+
+} @if(searchSucursal && _authService.currentUser()?.rol != 'vendedor') {
+<app-sucursal-search
+  [isOpen]="searchSucursal"
+  (sucursal)="selectSucursal($event)"
+  (closeModal)="searchSucursal = false"
+></app-sucursal-search>
+} @if(searchListaPrecio ) {
+<app-lista-precio-search
+  [isOpen]="searchListaPrecio"
+  (listaPrecio)="selectListaPrecio($event)"
+  (closeModal)="searchListaPrecio = false"
+></app-lista-precio-search>
+} @if(searchFormaVenta ) {
+<app-forma-venta-search
+  [isOpen]="searchFormaVenta"
+  (formaVenta)="selectFormaVenta($event)"
+  (closeModal)="searchFormaVenta = false"
+></app-forma-venta-search>
+} @if(searchNumeracion && sucursal().id && _authService.currentUser()?.rol !=
+'vendedor' ) {
+<app-numeracion-search
+  [isOpen]="searchNumeracion"
+  [sucursalId]="sucursal().id"
+  (numeracion)="selectNumeracion($event)"
+  (closeModal)="searchNumeracion = false"
+>
+</app-numeracion-search>
+}

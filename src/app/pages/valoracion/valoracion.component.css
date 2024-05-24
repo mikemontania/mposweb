@@ -1,0 +1,27 @@
+ /* Define a custom class to make text smaller */
+ .small-table th,
+ .small-table td {
+   font-size: 0.8rem; /* Adjust the font size as needed */
+ }
+ .rowEditModeColor {
+  background-color: #faffb4;
+}
+#items {
+  width: 100%;
+  height: 700px;
+  overflow-y: auto; /* Solo mostrará la barra de desplazamiento vertical */
+  overflow-x: hidden; /* Ocultará la barra de desplazamiento horizontal */
+}
+
+/* Estilos del scrollbar */
+#items::-webkit-scrollbar {
+  width: 10px; /* Ancho del scrollbar */
+}
+
+/* Fija la cabecera de la tabla al hacer scroll */
+#items thead th {
+  position: sticky;
+  top: 0;
+  background-color: #fff; /* Color de fondo para la cabecera fija */
+  z-index: 0; /* Asegura que la cabecera esté por encima del contenido */
+}

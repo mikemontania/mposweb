@@ -1,0 +1,23 @@
+<div class="card d-flex flex-column align-items-center" (click)="onCardClick()">
+  <div class="card-img">
+    <img
+      *ngIf="producto.img"
+      [attr.src]="producto.img | imagen: 'productos' | async"
+    />
+    <img *ngIf="!producto.img" src="../../../assets/img/sin-imagen.jpg" />
+    <div  *ngIf="producto.descuento"class="discount-badge">{{ producto.descuento | number  }}%</div>
+    <div *ngIf="producto.color" class="color-badge" [ngStyle]="{ 'background-color': producto.color }"></div>
+    <div class="code-badge"> {{ producto.precio | number }} GS</div>
+  </div>
+  <div class="description-badge  text-center p-2">
+    <div class="product-name">
+      {{ formattedDescription }}
+     </div>
+<!--      <div class="price">
+      <div class="product-name  ">
+        {{ producto.precio | number }} GS
+      </div>
+      </div> -->
+  </div>
+
+</div>

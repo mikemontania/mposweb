@@ -1,0 +1,30 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4 shadow-lg rounded" style="width: 350px;">
+    <div class="text-center  mb-4">
+      <img src="../../../assets/logo-mb.png" alt="Logo" class="logo-img">
+    </div>
+    <form   [formGroup]="loginForm"
+    (ngSubmit)="login()" class="form-horizontal needs-validation"  novalidate>
+    <div class="mb-3">
+      <label for="username" class="form-label">Usuario</label>
+      <input formControlName="username" class="form-control" type="email" required placeholder="Correo del usuario">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <div class="input-group">
+        <input formControlName="password" class="form-control" type="password" [type]="showPassword ? 'text' : 'password'"
+          required placeholder="Contraseña">
+        <button class="btn btn-outline-secondary" type="button" id="togglePassword" (click)="toggleShowPassword()">
+          <i [class]="showPassword ? 'far fa-eye-slash' : 'far fa-eye'"></i>
+        </button>
+      </div>
+    </div>
+      <div class="mb-4 form-check">
+        <input formControlName="recuerdame" type="checkbox" class="form-check-input" id="rememberMe">
+        <label class="form-check-label" for="rememberMe"> Recuérdame</label>
+      </div>
+      <button type="submit" class="btn btn-dark w-100">Ingresar</button>
+    </form>
+  </div>
+</div>
+

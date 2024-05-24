@@ -1,0 +1,220 @@
+<div class="card">
+  <div class="card-body">
+
+    <!-- Comprobante Numero Input -->
+    <div class="input-group mb-3 w-50 d-flex selector">
+      <div class="w-100 mb-3">
+        <input-debounce #inputSearch [delay]="300" id="inputSearch" type="text" placeholder="Comprobante numero ..." required="" aria-invalid="false" (value)="debounceSearch($event)" />
+      </div>
+    </div>
+    <!-- Date Inputs -->
+    <div class="input-group mb-3 w-50 d-flex selector">
+
+      <div class="input-group d-flex">
+
+        <span class="input-group-text">DESDE/HASTA</span>
+        <input type="date" class="form-control" id="fechaDesde" [(ngModel)]="fechaDesde" />
+        <input type="date" class="form-control" id="fechaHasta" [(ngModel)]="fechaHasta" />
+      </div>
+    </div>
+
+
+    <!-- Cliente Input -->
+    <div class="input-group mb-3 w-50 d-flex selector">
+      <span (click)="buscarCliente()" class="input-group-text flex-grow-1 d-flex justify-content-between" id="basic-addon3">
+        @if(cliente()?.id) {
+          <span class="client-info">
+            Cliente:
+          </span>
+
+             <small>{{ cliente()?.razonSocial }}-{{ cliente()?.nroDocumento }}</small>
+
+        } @else {
+          <span class="client-info"><small>Buscar Cliente ...</small></span>
+        }
+        <span class="dropdown-icon">
+          <i class="mh-1 fa-solid fa-sort-down"></i>
+        </span>
+      </span>
+    </div>
+
+    <!-- Sucursal Input -->
+
+
+    <div class="input-group mb-3 w-50 d-flex selector">
+
+      <div class="input-group d-flex">
+
+        <span class="input-group-text">Sucursal</span>
+        <select
+        [disabled]="role == 'vendedor'"
+        class="form-control form-control-sm"
+        [(ngModel)]="sucursalSeleccionada"
+        name="sucursalSeleccionada"
+        id="sucursal"
+      >
+        <option [value]="0">TODAS LAS SUCURSALES</option>
+        <option *ngFor="let sucursal of sucursales" [value]="sucursal.id">
+          {{ sucursal.descripcion }}
+        </option>
+      </select>
+      </div>
+    </div>
+
+
+       <!-- lista Precio Input -->
+       <div class="input-group mb-3 w-50 d-flex selector">
+
+        <div class="input-group d-flex">
+
+          <span class="input-group-text">Lista Precio</span>
+          <select
+
+          class="form-control form-control-sm"
+          [(ngModel)]="listaSeleccionada"
+          name="listaSeleccionada"
+          id="listaPrecio"
+        >
+
+          <option *ngFor="let lista of listas" [value]="lista.id">
+            {{ lista.descripcion }}
+          </option>
+        </select>
+        </div>
+      </div>
+
+
+
+    <!-- Search and Cancel Buttons -->
+    <div class="card mb-3 w-50 d-flex selector">
+      <div class="btn-group">
+        <button type="button" class="btn btn-outline-success" (click)="buscar()">Buscar</button>
+        <button type="button" class="btn btn-outline-danger" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    @if(ventas() && ventas().length > 0) {
+
+      <div class=" pt-4 d-flex flex-column align-items-center">
+        <div id="details" style="overflow-x: auto">
+          <table class="table caption-top table-sm small-table">
+            <caption>
+              Facturas({{
+                ventas().length | number
+              }})
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">CLIENTE</th>
+                <th scope="col">SUCURSAL</th>
+                <th scope="col">LISTA</th>
+                <th scope="col">FORMAVENTA</th>
+                <th scope="col">VENDEDOR</th>
+                <th scope="col">COMPROBANTE</th>
+                <th scope="col">FECHA</th>
+                <th scope="col">SUBTOTAL</th>
+                <th scope="col">DESCUENTO</th>
+                <th scope="col">total</th>
+                <th scope="col">anulado</th>
+                <th scope="col">anular</th>
+                <th scope="col">detalles</th>
+                <th scope="col">doc</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (venta of ventas(); track venta.id; let index = $index) {
+              <tr>
+                <th scope="row">{{ index + 1 }}</th>
+                <td>{{ venta.id }}</td>
+                <td>
+                  <div class="text-truncate">
+                    <span class="d-block text-sm">{{ venta.cliente.razonSocial }}</span>
+                    <small class="d-block text-sm">{{ venta.cliente.nroDocumento }}</small>
+                  </div>
+                </td>
+                <td  class="text-sm">{{ venta.sucursal.descripcion }}</td>
+                <td  class="text-sm">{{ venta.listaPrecio.descripcion }}</td>
+                <td  class="text-sm">{{ venta.formaVenta.descripcion }}</td>
+                <td  class="text-sm">{{ venta.vendedorCreacion.usuario }}</td>
+                <td  class="text-sm">
+                  <span class="d-block text-sm">{{ venta.nroComprobante }}</span>
+                  <small class="d-block text-sm">{{ venta.timbrado }}</small>
+                </td>
+                <td  class="text-sm">{{ venta.fechaVenta }}</td>
+                <td  class="text-sm">{{ venta.importeSubtotal | number }} Gs</td>
+                <td  class="text-sm">
+                  <div class="text-truncate">
+                    <span class="d-block text-sm">{{venta.porcDescuento | number }}%</span>
+                    <small class="d-block text-sm"> {{ venta.importeDescuento | number }} Gs</small>
+                  </div>
+                 </td>
+                <td  class="text-sm">{{ venta.importeTotal | number }} Gs</td>
+                <td  class="text-sm">{{ (venta.anulado )?'SI':'NO' }}</td>
+                <td  class="text-sm">
+                  <button class="btn btn-sm btn-outline-danger text-danger"(click)="anular(venta.id)"[disabled]="venta.anulado"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Anular ventas"   >
+                    <i class="bi bi-cart-x"></i>
+                  </button>
+                </td>
+                <td  class="text-sm">
+                  <button class="btn btn-sm btn-outline-info text-info"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Ver detalles de ventas"
+                  (click)="verDetalles(venta.id)">
+                    <i class="bi bi-card-list"></i>
+                  </button>
+                </td>
+                <td  class="text-sm">
+                  <button class="btn btn-sm btn-outline-success text-success"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Ver documento"  (click)="getDoc(venta.id)">
+                    <i class="bi bi-card-list"></i>
+                  </button>
+                </td>
+              </tr>
+              } @empty {
+              <tr></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    } @else {
+    <div class="w-100 empty-message-container">
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">Atención</h4>
+        <p>No se han encontrado ventas...</p>
+      </div>
+    </div>
+    }
+
+    <div class="d-flex justify-content-center">
+      <app-paginator
+        [totalPages]="totalPages()"
+        [currentPage]="page()"
+        (pageChanged)="onPageChanged($event)"
+      >
+      </app-paginator>
+    </div>
+  </div>
+</div>
+@if(searchCliente ) {
+<app-cliente-search
+  [isOpen]="searchCliente"
+  (cliente)="selectCliente($event)"
+  (closeModal)="searchCliente = false"
+></app-cliente-search>
+
+}

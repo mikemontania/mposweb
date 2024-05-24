@@ -1,0 +1,206 @@
+<div class="container-fluid mt-4">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-body">
+        <div class="card-body">
+          <form class="row" role="form" novalidate class="row g-3">
+            <div class="col-md-3">
+              <label for="fechaDesde" class="form-label">Fecha Desde</label>
+              <input
+                type="date"
+                class="form-control form-control-sm"
+                [(ngModel)]="fechaDesde"
+                id="fechaDesde"
+                name="fechaDesde"
+              />
+            </div>
+
+            <div class="col-md-3">
+              <label for="fechaHasta" class="form-label">Fecha Hasta</label>
+              <input
+                type="date"
+                class="form-control form-control-sm"
+                [(ngModel)]="fechaHasta"
+                id="fechaHasta"
+                name="fechaHasta"
+              />
+            </div>
+            <div class="col-md-3">
+              <label for="fechaHasta" class="form-label">Sucursal</label>
+              <select
+                [disabled]="role == 'vendedor'"
+                class="form-control form-control-sm"
+                [(ngModel)]="sucursalSeleccionada"
+                name="sucursalSeleccionada"
+                id="sucursal"
+              >
+                <option [value]="0">Todas</option>
+                <option
+                  *ngFor="let sucursal of sucursales"
+                  [value]="sucursal.id"
+                >
+                  {{ sucursal.descripcion }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <button
+                type="button"
+                class="mt-4 btn btn-outline-success"
+                (click)="getReport()"
+              >
+                Buscar <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          @if(cargadoMediosPago){
+          <div class="chart-container">
+            <ngx-pie-chart
+              [dashTema]="dashTema"
+              legendTitle="Reporte de Medio pago"
+              [results]="chatResulsMediosPago"
+              (select)="onSeleccionMedioPago($event)"
+            >
+            </ngx-pie-chart>
+          </div>
+           <div class="chart-totals">
+
+            <div class="chart-amount">
+              Cantidad:<strong>
+                {{ dashmedio_cantidad | number }} Medios Pago</strong
+              >
+            </div>
+            <div class="chart-amount">
+              Total:<strong>{{ dashmedio_importeCobrado | number }} Gs</strong>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6" *ngIf="role != 'vendedor'">
+      <div class="card">
+        <div class="card-body">
+          @if(cargadoVendedores){
+          <div class="chart-container">
+            <ngx-charts-barra-vertical
+              [dashTema]="dashTema"
+              legendTitle="Reporte de Vendedores"
+              [results]="chatResulsVendedores"
+              (select)="onSeleccionVendedor($event)"
+            ></ngx-charts-barra-vertical>
+          </div>
+          <div class="chart-totals">
+          <div class="chart-amount">
+            Cantidad:<strong>
+              {{ dashvend_cantidad | number }} Facturas</strong
+            >
+          </div>
+        <!--   <div class="chart-amount">
+            Vendido Kg:<strong>{{ dashvend_peso | number }} kg</strong>
+          </div> -->
+          <div class="chart-amount">
+            Vendido :<strong>{{ dashvend_total | number }} Gs</strong>
+          </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          @if(cargadoSucursales){
+          <div class="chart-container">
+            <ngx-pie-chart
+              [dashTema]="dashTema"
+              legendTitle="Reporte de Sucursales"
+              [results]="chatResulsSucursales"
+              (select)="onSeleccionSucursal($event)"
+            ></ngx-pie-chart>
+          </div>
+          <div class="chart-totals">
+          <div class="chart-amount">
+            Cantidad:<strong>
+              {{ dashsucursal_totalventas | number }}  Facturas</strong
+            >
+          </div>
+          <div class="chart-amount">
+            Vendido :<strong
+              >{{ dashsucursal_totalimporte | number }} Gs</strong
+            >
+          </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          @if(cargadoClientes){
+          <div class="chart-container">
+            <ngx-charts-barra-vertical
+              [dashTema]="dashTema"
+              legendTitle="Top de Clientes"
+              [results]="chatResulsClientes"
+              (select)="onSeleccionCliente($event)"
+            ></ngx-charts-barra-vertical>
+          </div>
+          <div class="chart-totals">
+          <div class="chart-amount">
+            Cantidad:<strong>
+              {{ dashcliente_totalfacturas | number }}    </strong
+            >
+          </div>
+          <div class="chart-amount">
+            Comprado :<strong
+              >{{ dashcliente_totalimporte | number }} Gs</strong
+            >
+          </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          @if(cargadoVariantes){
+          <div class="chart-container">
+            <ngx-charts-barra-vertical
+              [dashTema]="dashTema"
+              legendTitle="Top de Producto"
+              [results]="chatResulsVariantes"
+              (select)="onSeleccionVariante($event)"
+            ></ngx-charts-barra-vertical>
+          </div>
+          <div class="chart-totals">
+          <div class="chart-amount">
+            Cantidad:<strong>
+              {{ dashvariante_vendidos | number }}  variantes</strong
+            >
+          </div>
+       <!--    <div class="chart-amount">
+            Vendidos :<strong>{{ dashvariante_peso | number }} Kg</strong>
+          </div> -->
+          <div class="chart-amount">
+            Vendidos :<strong
+              >{{ dashvariante_totalimporte | number }} Gs</strong
+            >
+          </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

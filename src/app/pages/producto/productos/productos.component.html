@@ -1,0 +1,163 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-8 col-sm-12">
+        <div class="container-fluid">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                (click)="cambiarTab('productos-tab')"
+                id="productos-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#productos-content"
+                role="tab"
+                aria-controls="productos-content"
+                aria-selected="true"
+                >Productos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                (click)="cambiarTab('marcas-tab')"
+                id="marcas-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#marcas-content"
+                role="tab"
+                aria-controls="marcas-content"
+                aria-selected="false"
+                >Marcas</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                (click)="cambiarTab('categorias-tab')"
+                id="categorias-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#categorias-content"
+                role="tab"
+                aria-controls="categorias-content"
+                aria-selected="false"
+                >Categorías</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                (click)="cambiarTab('subcategorias-tab')"
+                id="subcategorias-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#subcategorias-content"
+                role="tab"
+                aria-controls="subcategorias-content"
+                aria-selected="false"
+                >Subcategorías</a
+              >
+            </li>
+
+
+
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                (click)="cambiarTab('presentaciones-tab')"
+                id="presentaciones-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#presentaciones-content"
+                role="tab"
+                aria-controls="presentaciones-content"
+                aria-selected="false"
+                >Presentaciones</a
+              >
+            </li>
+
+
+
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                (click)="cambiarTab('variedades-tab')"
+                id="variedades-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#variedades-content"
+                role="tab"
+                aria-controls="variedades-content"
+                aria-selected="false"
+                >Variedades</a
+              >
+            </li>
+
+
+
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                (click)="cambiarTab('unidades-tab')"
+                id="unidades-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#unidades-content"
+                role="tab"
+                aria-controls="unidades-content"
+                aria-selected="false"
+                >Unidades</a
+              >
+            </li>
+
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="productos-content">
+              @if (tabActivo == 'productos-tab') {
+              <app-producto></app-producto>
+              }
+            </div>
+            <div class="tab-pane fade" id="marcas-content">
+              @if (tabActivo == 'marcas-tab') {
+              <app-entidades [tipo]="'marcas'"></app-entidades>
+              }
+            </div>
+            <div class="tab-pane fade" id="categorias-content">
+              @if (tabActivo == 'categorias-tab') {
+              <app-entidades [tipo]="'categorias'"></app-entidades>
+              }
+            </div>
+            <div class="tab-pane fade" id="subcategorias-content">
+              @if (tabActivo == 'subcategorias-tab') {
+              <app-entidades [tipo]="'subcategorias'"></app-entidades>
+              }
+            </div>
+
+
+            <div class="tab-pane fade" id="presentaciones-content">
+              @if (tabActivo == 'presentaciones-tab') {
+              <app-entidades [tipo]="'presentaciones'"></app-entidades>
+              }
+            </div>
+
+
+            <div class="tab-pane fade" id="variedades-content">
+              @if (tabActivo == 'variedades-tab') {
+              <app-entidades [tipo]="'variedades'"></app-entidades>
+              }
+            </div>
+
+
+            <div class="tab-pane fade" id="unidades-content">
+              @if (tabActivo == 'unidades-tab') {
+              <app-entidades [tipo]="'unidades'"></app-entidades>
+              }
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
